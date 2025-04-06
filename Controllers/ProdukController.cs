@@ -26,7 +26,7 @@ namespace Manajemen_Produk.Controllers
             return View(produk);
         }
 
-         // Menampilkan Form Create
+        // Menampilkan Form Create
         [HttpGet]
         [Route("tambah")] // URL: /produk/tambah
         public IActionResult Create()
@@ -75,6 +75,80 @@ namespace Manajemen_Produk.Controllers
                 await _context.SaveChangesAsync(); // Simpan perubahan
             }
             return RedirectToAction("Index"); // Kembali ke daftar produk
+        }
+
+        // GET: Product/Edit/5
+        [HttpGet]
+        [Route("Produk/Edit/{id}")]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var produk = await _context.Produk.FindAsync(id);
+            if (produk == null)
+            {
+                return NotFound();
+            }
+            return View(produk);
+        }
+
+        // POST: Product/Edit/5
+        [HttpPost]
+        [Route("Produk/Edit/{id}")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id, Nama, Harga")] Produk produk)
+        {
+            if (id != produk.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(produk);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ProductExists(produk.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
+            return View(produk);
+        }
+
+        [HttpGet]
+        [Route("detail/{id}")]
+        
+        public async Task<IActionResult> Detail(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var produk = await _context.Produk.FirstOrDefaultAsync(p => p.Id == id);
+
+            if (produk == null)
+            {
+                return NotFound();
+            }
+
+            return View(produk); // ← Kirim satu objek Produk
+        }
+
+
+
+        private bool ProductExists(int id)
+        {
+            return _context.Produk.Any(e => e.Id == id);
         }
 
     }
