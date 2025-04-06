@@ -49,6 +49,34 @@ namespace Manajemen_Produk.Controllers
             return View(produk);
         }
 
+        // Konfirmasi Hapus Produk
+        [HttpGet]
+        [Route("hapus/{id}")] // URL: /produk/hapus/{id}
+        public async Task<IActionResult> Delete(int id)
+        {
+            var produk = await _context.Produk.FindAsync(id);
+            if (produk == null)
+            {
+                return NotFound();
+            }
+            return View(produk); // Menampilkan konfirmasi penghapusan
+        }
+
+        // Proses Hapus Produk
+        [HttpPost, ActionName("Delete")]
+        [Route("hapus/{id}")]
+        [ValidateAntiForgeryToken] // Mencegah serangan CSRF
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var produk = await _context.Produk.FindAsync(id);
+            if (produk != null)
+            {
+                _context.Produk.Remove(produk); // Hapus produk dari database
+                await _context.SaveChangesAsync(); // Simpan perubahan
+            }
+            return RedirectToAction("Index"); // Kembali ke daftar produk
+        }
+
     }
 }
 
