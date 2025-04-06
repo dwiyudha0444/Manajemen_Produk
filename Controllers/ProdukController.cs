@@ -25,6 +25,30 @@ namespace Manajemen_Produk.Controllers
             var produk = await _context.Produk.ToListAsync();
             return View(produk);
         }
+
+         // Menampilkan Form Create
+        [HttpGet]
+        [Route("tambah")] // URL: /produk/tambah
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // Menyimpan Data ke Database
+        [HttpPost]
+        [Route("tambah")]
+        [ValidateAntiForgeryToken] // Mencegah serangan CSRF
+        public async Task<IActionResult> Create([Bind("Name,Price")] Produk produk)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(produk); // Tambahkan ke database
+                await _context.SaveChangesAsync(); // Simpan perubahan
+                return RedirectToAction("Index"); // Kembali ke daftar produk
+            }
+            return View(produk);
+        }
+
     }
 }
 
