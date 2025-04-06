@@ -10,18 +10,18 @@ namespace Manajemen_Produk.Models
         public int Id { get; set; }
 
         [Required]
-        public int ProductId { get; set; }
+        public int Produk_id { get; set; }
 
         [Required]
-        public int Quantity { get; set; }
+        public int Qty { get; set; }
 
         [Required]
-        public decimal TotalPrice { get; set; }
+        public int TotalHarga { get; set; }
 
-        public DateTime TransactionDate { get; set; } = DateTime.Now;
+        public DateTime Date { get; set; } = DateTime.Now;
 
         // Relasi ke Product
-        [ForeignKey("ProductId")]
+        [ForeignKey("Produk_id")]
         public Produk Produk { get; set; }
     }
 }

@@ -1,0 +1,33 @@
+@model Manajemen_Produk.Models.Transaksi
+
+@{
+    ViewData["Title"] = "Tambah Transaksi";
+}
+
+<h2>Tambah Transaksi</h2>
+
+<form asp-action="Create" method="post">
+    <div>
+        <label>Produk</label>
+        <select asp-for="Produk_id" asp-items="ViewBag.ProdukList" required></select>
+    </div>
+
+    <div>
+        <label>Jumlah</label>
+        <input asp-for="Qty" type="number" required />
+    </div>
+
+    <div>
+        <label>Total Harga</label>
+        <input asp-for="TotalHarga" type="number" required />
+    </div>
+
+    <div>
+        <label>Tanggal Transaksi</label>
+        <input asp-for="Date" type="datetime-local" />
+    </div>
+
+    <button type="submit">Simpan</button>
+</form>
+
+<a asp-action="Index">Kembali ke Daftar Transaksi</a>
