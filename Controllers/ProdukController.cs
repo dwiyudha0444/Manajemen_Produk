@@ -38,7 +38,7 @@ namespace Manajemen_Produk.Controllers
         [HttpPost]
         [Route("tambah")]
         [ValidateAntiForgeryToken] // Mencegah serangan CSRF
-        public async Task<IActionResult> Create([Bind("Name,Price")] Produk produk)
+        public async Task<IActionResult> Create([Bind("Nama,Harga")] Produk produk)
         {
             if (ModelState.IsValid)
             {

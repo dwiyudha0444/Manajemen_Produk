@@ -9,13 +9,13 @@ namespace Manajemen_Produk.Models
 
         [Required]
         [StringLength(100)]
-        public string Name { get; set; }
+        public string Nama { get; set; }
 
         [Required]
         [Range(0, double.MaxValue)]
-        public decimal Price { get; set; }
+        public int Harga { get; set; }
 
         [Required]
-        public int Stock { get; set; }
+        public int Stok { get; set; }
     }
 }
